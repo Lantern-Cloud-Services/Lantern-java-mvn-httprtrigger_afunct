@@ -43,7 +43,6 @@
 
     <build>
         <plugins>
-<!--
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
@@ -54,7 +53,6 @@
                     <encoding>${project.build.sourceEncoding}</encoding>
                 </configuration>
             </plugin>
-        -->            
             <plugin>
                 <groupId>com.microsoft.azure</groupId>
                 <artifactId>azure-functions-maven-plugin</artifactId>
@@ -162,6 +160,7 @@
                     </filesets>
                 </configuration>
             </plugin>
+<!--
             <plugin>
                 <artifactId>maven-compiler-plugin</artifactId>
                 <version>3.1</version>
@@ -172,6 +171,7 @@
                     <executable>C:\Program Files\Java\jdk1.8.0_202\bin\javac</executable>
                 </configuration>
             </plugin>
+-->            
         </plugins>
     </build>
 </project>
