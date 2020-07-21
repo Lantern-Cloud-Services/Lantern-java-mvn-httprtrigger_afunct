@@ -11,7 +11,6 @@ import com.microsoft.azure.functions.annotation.HttpTrigger;
 
 import java.util.Optional;
 import java.sql.*;
-//import java.util.*;
 
 /**
  * Azure Functions with HTTP Trigger.
