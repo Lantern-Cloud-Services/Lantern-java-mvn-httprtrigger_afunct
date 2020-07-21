@@ -57,7 +57,6 @@ public class Function {
     private String getData(ExecutionContext context, String username) throws Exception
     {
         String url = System.getenv("SQLCONNSTR_icecreamdbconnstr");
-        //String url = "jdbc:sqlserver://jcooklcs-sqlserver1.database.windows.net:1433;database=jcookLCS-sqldb1;user=sqladmin@jcooklcs-sqlserver1;password=Pa$$w0rd!;encrypt=true;trustServerCertificate=false;hostNameInCertificate=*.database.windows.net;loginTimeout=30;";
         
         Connection connection = DriverManager.getConnection(url);
         
