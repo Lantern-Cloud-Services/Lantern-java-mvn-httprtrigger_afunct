@@ -10,6 +10,8 @@ import com.microsoft.azure.functions.annotation.FunctionName;
 import com.microsoft.azure.functions.annotation.HttpTrigger;
 
 import java.util.Optional;
+import java.sql.*;
+//import java.util.*;
 
 /**
  * Azure Functions with HTTP Trigger.
@@ -33,11 +35,43 @@ public class Function {
         // Parse query parameter
         final String query = request.getQueryParameters().get("name");
         final String name = request.getBody().orElse(query);
-
+        
+        String favorite = "";
+        try
+        {
+            favorite = getData(context, name);
+            context.getLogger().info(favorite);
+        }
+        catch (Exception e)
+        {
+            e.printStackTrace();
+        }
+        
         if (name == null) {
             return request.createResponseBuilder(HttpStatus.BAD_REQUEST).body("Please pass a name on the query string or in the request body").build();
         } else {
-            return request.createResponseBuilder(HttpStatus.OK).body("Hello, " + name + " from Azure function for Java!").build();
+            return request.createResponseBuilder(HttpStatus.OK).body("Hello " + name + " from Azure function for Java! Your favorite icecream is: " + favorite).build();
         }
     }
+
+    private String getData(ExecutionContext context, String username) throws Exception
+    {
+        String url = System.getenv("SQLCONNSTR_icecreamdbconnstr");
+        //String url = "jdbc:sqlserver://jcooklcs-sqlserver1.database.windows.net:1433;database=jcookLCS-sqldb1;user=sqladmin@jcooklcs-sqlserver1;password=Pa$$w0rd!;encrypt=true;trustServerCertificate=false;hostNameInCertificate=*.database.windows.net;loginTimeout=30;";
+        
+        Connection connection = DriverManager.getConnection(url);
+        
+        context.getLogger().info("Select data");
+        PreparedStatement selectStatement = connection.prepareStatement("select favorite from userfavorites where username = '" + username + "'");
+
+        ResultSet resultSet = selectStatement.executeQuery();
+        if (!resultSet.next()) {
+            context.getLogger().info("There is no data in the database!");
+            return "unknown";
+        }
+        return resultSet.getString("favorite");
+
+    }
+
+
 }
